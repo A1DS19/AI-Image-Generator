@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Card, FormField, Loader } from '../components';
+import { API_URL } from '../constants/urls';
 
 const Home = () => {
   const [loading, setLoading] = React.useState(false);
@@ -12,7 +13,7 @@ const Home = () => {
     const fetchPosts = async () => {
       setLoading(true);
       try {
-        const response = await fetch('http://localhost:5000/api/v1/post', {
+        const response = await fetch(`${API_URL}/post`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         });
