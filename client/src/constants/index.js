@@ -1,6 +1,6 @@
 export const surpriseMePrompts = [
   'a man with an ice cream cone on his head',
-  'a gun with hot dogs as bullets',
+  'a revolver with hot dogs as bullets',
   'an armchair in the shape of an avocado',
   'a surrealist dream-like oil painting by Salvador Dalí of a cat playing checkers',
   'teddy bears shopping for groceries in Japan, ukiyo-e',
