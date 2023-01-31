@@ -22,6 +22,10 @@ function App() {
           <Route path='/create-post' element={<CreatePost />} />
         </Routes>
       </main>
+
+      <footer className='h-50 bg-white w-full py-4 border-b border-b-[#e6ebf4]'>
+        <p className='ml-3 mt-2 font-bold'>Jose Padilla {new Date().getFullYear()}</p>
+      </footer>
     </BrowserRouter>
   );
 }
