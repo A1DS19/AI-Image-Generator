@@ -14,7 +14,35 @@ const CreatePost = () => {
   const [generatingImg, setGeneratingImg] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
 
-  const handleSubmit = (e) => {};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (form.name && form.prompt && form.photo) {
+      try {
+        setLoading(true);
+
+        const response = await fetch('http://localhost:5000/api/v1/post', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(form),
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          navigate('/');
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      alert('Favor llenar todos los campos');
+    }
+  };
 
   const handleChange = (e) => {
     setForm({
@@ -30,7 +58,30 @@ const CreatePost = () => {
     return randomPrompt;
   };
 
-  const handleGenerateImg = () => {};
+  const handleGenerateImg = async () => {
+    if (form.prompt) {
+      try {
+        setGeneratingImg(true);
+        const response = await fetch('http://localhost:5000/api/v1/dalle', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ prompt: form.prompt }),
+        });
+
+        const data = await response.json();
+
+        setForm({ ...form, photo: `data:image/jpeg;base64,${data.photo}` });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setGeneratingImg(false);
+      }
+    } else {
+      alert('Favor llenar todos los campos');
+    }
+  };
 
   return (
     <section className='max-w-7xl mx-auto'>
@@ -44,7 +95,7 @@ const CreatePost = () => {
       <form className='mt-16 max-w-3xl' onSubmit={handleSubmit}>
         <div className='flex flex-col gap-5'>
           <FormField
-            labelName='Your name'
+            labelName='Tu nombre'
             name='name'
             type='text'
             placeholder='Mario Lizano'
@@ -88,7 +139,7 @@ const CreatePost = () => {
 
         <div className='mt-5 flex gap-5'>
           <button
-            type='submit'
+            type='button'
             onClick={handleGenerateImg}
             className='text-white bg-green-700 font-medium rounded-md text-sm w-full sm:w-auto px-5 py-2.5 text-center'
           >
@@ -98,7 +149,7 @@ const CreatePost = () => {
 
         <div className='mt-10'>
           <p className='mt-2 text-[#666e75] text-[14px]'>
-            Cuando crees tu image la puedes compartir con la comunidad
+            Cuando crees tu imagen compartela con la comunidad
           </p>
           <button
             type='submit'

@@ -37,6 +37,9 @@ const FormField = ({
         onChange={handleChange}
         className='bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#4649ff] focus:border-[#4649ff] outline-none block w-full p-3 border'
       />
+      {isSurpriseMe && (
+        <p className='text-xs mt-1'>La busqueda puede ser en ingles o español</p>
+      )}
     </div>
   );
 };
